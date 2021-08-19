@@ -1,36 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
-
+  <link rel="stylesheet" href="css/styles.css">
   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
-  
   <title>Frontend Mentor | Todo app</title>
 
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+
 </head>
-<body>
 
-  Todo
+<body class="dark-theme">
+  <div class="header">
+    Todo
+  </div>
 
-  <!-- Add dynamic number --> items left
+  <div class="new-task">
+    <input type="checkbox" class="check_new_task">
+    <input class=input_task type="text" placeholder="Create a new todo ...">
+  </div>
+  <section class="task">
+    <ul>
+      <li>
+        <label for="" class="list-item">
+          <input type="checkbox" name="toDoItem" checked>
+          <span class="checkmark"></span>
+          <span class=text>Task 1</span>
+        </label>
+      </li>
+      <li>
+        <label for="" class="list-item">
+          <input type="checkbox" name="toDoItem" checked>
+          <span class="checkmark"></span>
+          <span class="text">Task 2</span>
+        </label>
+      </li>
+      <li>
+        <label for="" class="list-item">
+          <input type="checkbox" name="toDoItem" checked>
+          <span class="checkmark"></span>
+          <span class="text">Task 3</span>
+        </label>
+      </li>
 
-  All
-  Active 
-  Completed
+    </ul>
 
-  Clear Completed
+
+  </section>
+  <div class="bottom">
+    <div class="left_items"> items left</div>
+    <div class="filter">
+      <label>
+        <input id=all_task name="filter" type="radio" checked> All
+      </label>
+      <input id=active_task name="filter" type="radio"> Active
+      <input id=completed_task name="filter" type="radio"> Completed
+    </div>
+    <div class="clear">Clear Completed</div>
+  </div>
+
+
+
 
   Drag and drop to reorder list
-
-  <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
-  </div>
 </body>
+
 </html>
