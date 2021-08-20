@@ -7,7 +7,7 @@
   --main-bg: hsl(235, 21%, 11%);
   --todo-bg: hsl(235, 24%, 19%);
   --todo-shadow: hsl(235, 21%, 11%);
-  --font-color: hsl(234, 39%, 85%);
+  --font-color: hsl(0, 0%, 98%);
   --font-color-hover: #fff;
   --theme-bg: url(../images/icon-moon.svg) center no-repeat;
 }
@@ -17,7 +17,7 @@
   --main-bg: hsl(0, 0%, 98%);
   --todo-bg: hsl(0, 0%, 98%);
   --todo-shadow: hsl(235, 19%, 35%);
-  --font-color: hsl(236, 9%, 61%);
+  --font-color: hsl(235, 21%, 11%);
   --font-color-hover: hsl(235, 21%, 11%);
   --theme-bg: url(../images/icon-sun.svg) center no-repeat;
 }
@@ -26,6 +26,7 @@
 body {
   background: var(--bg-top-image);
   background-color: var(--main-bg);
+  background-size: contain;
 }
 
 .flex-row {
@@ -34,7 +35,6 @@ body {
 }
 
 header, body {
-  outline: 2px dotted yellow;
   max-width: 490px;
   margin: 0 auto;
 }
@@ -67,7 +67,8 @@ header h1 {
 
 /* ============ top of main =========== */
 .add-new-item{
-    background-color: var(--todo-bg)
+    background-color: var(--todo-bg);
+    border-radius: 10px;
 }
 .add-new-item input{
   width: 100%;
@@ -89,3 +90,118 @@ header h1 {
   border-radius: 100%;
   margin-left: 5px;
 }
+/* ======== content =========== */
+ul{
+  margin: 2rem 0 0;
+  padding: 0;
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
+}
+ul li{
+
+  height: 3rem;
+  width: 100%;
+  background: var(--todo-bg);
+  color: var(--font-color);
+  border-bottom: 1px solid var(--font-color);
+  cursor:pointer;
+
+}
+
+li label{
+  /* outline: 1px green solid; */
+  position: relative;
+  width: 100%;
+  cursor:pointer;
+
+}
+
+li .remove{
+  /* outline: 1px red solid; */
+  margin-right: 2%;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+background: url(../images/icon-cross.svg) no-repeat center;
+
+}
+
+label input[type="checkbox"]:checked ~.text {
+  text-decoration: line-through;
+}
+
+
+
+label .checkmark{
+
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  left: 0;
+  border-radius: 15px;
+  margin-right: 90px;
+}
+
+label .text{
+  margin-left: 10px;
+}
+
+label input[type="checkbox"] + .checkmark{
+  background: var(--todo-bg);
+  border: 1px solid gray;
+  margin-left: 3px;
+}
+label input[type="checkbox"]:checked + .checkmark{
+  background: linear-gradient(320deg, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+}
+
+ label input[type="checkbox"]{
+   visibility: hidden;
+ }
+
+
+ /* ============ bottom ========= */
+ .bottom-items{
+   background-color: var(--todo-bg);
+   padding:10px;
+   border-radius: 0 0 10px 10px;
+   justify-content: space-between;
+ }
+ .bottom-items *{
+   font-size: 0.9rem;
+   color: hsl(236, 9%, 61%);
+ }
+
+ .filter label{
+   cursor: pointer;
+   margin-right: 0.8rem;
+ }
+
+ .filter label:hover span{
+   color: var(--font-color-hover);
+ }
+
+ .filter label input{
+   position: absolute;
+   visibility: hidden;
+ }
+
+.filter label input[type="radio"]:checked + span{
+   color: hsl(220, 98%, 61%);
+ }
+
+
+  .clear{
+    cursor: pointer;
+  }
+
+  .clear:hover{
+    color:var(--font-color-hover);
+  }
+
+
+  @media (max-width:428px){
+    /* body{
+      background-color:red;
+    } */
+  }
