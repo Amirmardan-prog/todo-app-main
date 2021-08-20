@@ -1,72 +1,91 @@
-html, body {
-    margin: 0;
-    padding: 0;
-
-}
-
-
-.flex-row {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
+*{
+  font: 400 1.1rem "Josefin Sans", sans-serif;
 }
 
 .dark-theme {
-    --bg-top-image: 0 0 url(../images/bg-desktop-dark.jpg) no-repeat;
-    --main-bg: hsl(235, 21%, 11%);
-    --todo-bg: hsl(235, 24%, 19%);
-    --todo-shadow: hsl(235, 21%, 11%);
-    --font-color: hsl(234, 39%, 85%);
-    --font-color-hover: #fff;
+  --bg-top-image: 0 0 url(../images/bg-desktop-dark.jpg) no-repeat;
+  --main-bg: hsl(235, 21%, 11%);
+  --todo-bg: hsl(235, 24%, 19%);
+  --todo-shadow: hsl(235, 21%, 11%);
+  --font-color: hsl(234, 39%, 85%);
+  --font-color-hover: #fff;
+  --theme-bg: url(../images/icon-moon.svg) center no-repeat;
 }
 
 .light-theme {
-    --bg-top-image: 0 0 url(../images/bg-desktop-light.jpg) no-repeat;
-    --main-bg: hsl(0, 0%, 98%);
-    --todo-bg: hsl(0, 0%, 98%);
-    --todo-shadow: hsl(235, 19%, 35%);
-    --font-color: hsl(236, 9%, 61%);
-    --font-color-hover: hsl(235, 21%, 11%);
+  --bg-top-image: 0 0 url(../images/bg-desktop-light.jpg) no-repeat;
+  --main-bg: hsl(0, 0%, 98%);
+  --todo-bg: hsl(0, 0%, 98%);
+  --todo-shadow: hsl(235, 19%, 35%);
+  --font-color: hsl(236, 9%, 61%);
+  --font-color-hover: hsl(235, 21%, 11%);
+  --theme-bg: url(../images/icon-sun.svg) center no-repeat;
 }
+
 
 body {
   background: var(--bg-top-image);
   background-color: var(--main-bg);
-  background-size: 100vw;
-  font: 400 18px/1 'Josefin Sans', sans-serif;
 }
 
-header, main{
-  outline: 2px solid red;
-  max-width: 545px;
+.flex-row {
+  display: flex;
+  align-items: center;
+}
+
+header, body {
+  outline: 2px dotted yellow;
+  max-width: 490px;
   margin: 0 auto;
 }
 
-header{
+header {
   justify-content: space-between;
-  padding: 2rem 0 1rem;
+  padding: 3rem 0 0;
 }
 
-h1{
+header h1 {
+  color: #fff;
+  letter-spacing: 0.5rem;
+  font-size: 2rem;
   font-weight: 700;
-  color: white;
-  letter-spacing: 1rem;
-  font-size: 2.5rem;
 }
 
-#theme{
-  display: none;
+.theme-block input {
+  cursor: pointer;
+  visibility: hidden;
+  position: absolute;
 }
 
-.theme-block  label::after{
+.theme-block label {
+  cursor: pointer;
   display: block;
+  width: 2rem;
+  height: 2rem;
+  background: var(--theme-bg);
+}
+
+/* ============ top of main =========== */
+.add-new-item{
+    background-color: var(--todo-bg)
+}
+.add-new-item input{
+  width: 100%;
+  font-size: 1.1rem;
+  height: 2.2rem;
+  border-radius: 4px;
+  background-color: var(--todo-bg);
+  border: 0;
+  outline: 0;
+  color: var(--font-color);
+  margin-left: 5px;
+
+}
+
+.add-new-item span{
   width: 25px;
   height: 25px;
-  cursor: pointer;
-  content: '';
-  background: url(../images/icon-sun.svg);
-}
-
-#theme:checked + label::after{
-  background: url(../images/icon-moon.svg);
+  border: 1px solid gray ;
+  border-radius: 100%;
+  margin-left: 5px;
 }
