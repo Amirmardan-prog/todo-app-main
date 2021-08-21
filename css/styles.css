@@ -1,4 +1,5 @@
-*{
+/* https://www.youtube.com/watch?v=t2v-9xOEA-0 */
+* {
   font: 400 1.1rem "Josefin Sans", sans-serif;
 }
 
@@ -21,7 +22,6 @@
   --font-color-hover: hsl(235, 21%, 11%);
   --theme-bg: url(../images/icon-sun.svg) center no-repeat;
 }
-
 
 body {
   background: var(--bg-top-image);
@@ -66,11 +66,12 @@ header h1 {
 }
 
 /* ============ top of main =========== */
-.add-new-item{
-    background-color: var(--todo-bg);
-    border-radius: 10px;
+.add-new-item {
+  background-color: var(--todo-bg);
+  border-radius: 10px;
 }
-.add-new-item input{
+
+.add-new-item input {
   width: 100%;
   font-size: 1.1rem;
   height: 2.2rem;
@@ -80,128 +81,159 @@ header h1 {
   outline: 0;
   color: var(--font-color);
   margin-left: 5px;
-
 }
 
-.add-new-item span{
+.add-new-item span {
   width: 25px;
   height: 25px;
-  border: 1px solid gray ;
+  border: 1px solid gray;
   border-radius: 100%;
   margin-left: 5px;
 }
+
 /* ======== content =========== */
-ul{
+ul {
   margin: 2rem 0 0;
   padding: 0;
   border-radius: 10px 10px 0 0;
   overflow: hidden;
 }
-ul li{
 
+ul li {
   height: 3rem;
   width: 100%;
   background: var(--todo-bg);
   color: var(--font-color);
   border-bottom: 1px solid var(--font-color);
-  cursor:pointer;
-
+  cursor: pointer;
+  position: relative;
 }
 
-li label{
+li label {
   /* outline: 1px green solid; */
   position: relative;
   width: 100%;
-  cursor:pointer;
-
+  cursor: pointer;
 }
 
-li .remove{
+li .remove {
   /* outline: 1px red solid; */
-  margin-right: 2%;
+  position: absolute;
+  right: 0;
+  margin-right: 1%;
   width: 25px;
   height: 25px;
   cursor: pointer;
-background: url(../images/icon-cross.svg) no-repeat center;
-
+  background: url(../images/icon-cross.svg) no-repeat center;
+  visibility: hidden;
 }
 
-label input[type="checkbox"]:checked ~.text {
+li label:hover + .remove, .remove:hover{
+  visibility:visible;
+}
+
+label input[type="checkbox"]:checked~.text {
   text-decoration: line-through;
 }
 
-
-
-label .checkmark{
-
+label .checkmark {
   width: 25px;
   height: 25px;
   position: absolute;
   left: 0;
   border-radius: 15px;
-  margin-right: 90px;
 }
 
-label .text{
-  margin-left: 10px;
-}
-
-label input[type="checkbox"] + .checkmark{
-  background: var(--todo-bg);
+label input[type="checkbox"]+.checkmark {
   border: 1px solid gray;
   margin-left: 3px;
 }
-label input[type="checkbox"]:checked + .checkmark{
+
+label input[type="checkbox"]:checked+.checkmark {
+  background-image: url(../images/icon-check.svg), linear-gradient(320deg, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+label input[type="checkbox"] {
+  visibility: hidden;
+}
+
+/* label .text {
+  margin-left: 10px;
+} */
+
+label span {
+  margin-left: 10px;
+}
+
+
+
+label:hover .checkmark{
   background: linear-gradient(320deg, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
 }
 
- label input[type="checkbox"]{
-   visibility: hidden;
- }
+label:hover input[type="checkbox"] + .checkmark .mask{
+  position: absolute;
+left: 1px;
+top: 1px;
+  content: "";
+  display: block;
+  height: 23px;
+  width: 23px;
+  background-color: var(--todo-bg);
+  border-radius: 50%;
+}
 
 
- /* ============ bottom ========= */
- .bottom-items{
-   background-color: var(--todo-bg);
-   padding:10px;
-   border-radius: 0 0 10px 10px;
-   justify-content: space-between;
- }
- .bottom-items *{
-   font-size: 0.9rem;
-   color: hsl(236, 9%, 61%);
- }
+label:hover input[type="checkbox"]:checked + .checkmark .mask{
+  display: none;
+}
 
- .filter label{
-   cursor: pointer;
-   margin-right: 0.8rem;
- }
+/* ============ bottom ========= */
+.bottom-items {
+  background-color: var(--todo-bg);
+  padding: 10px;
+  border-radius: 0 0 10px 10px;
+  justify-content: space-between;
+  box-shadow: 0 1rem 3rem var(--todo-shadow);
 
- .filter label:hover span{
-   color: var(--font-color-hover);
- }
+}
 
- .filter label input{
-   position: absolute;
-   visibility: hidden;
- }
+.bottom-items * {
+  font-size: 0.9rem;
+  color: hsl(236, 9%, 61%);
+}
 
-.filter label input[type="radio"]:checked + span{
-   color: hsl(220, 98%, 61%);
- }
+.filter label {
+  cursor: pointer;
+  margin-right: 0.8rem;
+}
 
+.filter label:hover span {
+  color: var(--font-color-hover);
+}
 
-  .clear{
-    cursor: pointer;
-  }
+.filter label input {
+  position: absolute;
+  visibility: hidden;
+}
 
-  .clear:hover{
-    color:var(--font-color-hover);
-  }
+.filter label input[type="radio"]:checked+span {
+  color: hsl(220, 98%, 61%);
+}
 
+.clear {
+  cursor: pointer;
+}
 
-  @media (max-width:428px){
-    /* body{
+.clear:hover {
+  color: var(--font-color-hover);
+}
+
+@media (max-width:428px) {
+  /* body{
       background-color:red;
     } */
-  }
+}
