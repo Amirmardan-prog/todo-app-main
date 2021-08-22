@@ -3,6 +3,30 @@ countTheLefts()
 
 let theme = document.querySelector("body")
 
+function allTasks(){
+  /*
+    Function to seperate all lists
+  */
+  return document.querySelectorAll("ul li")
+}
+
+function doneTasks(){
+  /*
+    Function to seperate all checked lists
+  */
+  return document.querySelectorAll("ul li input:checked")
+}
+
+function activeTasks(){
+  /*
+    Function to seperate all nonchecked lists
+  */
+  return document.querySelectorAll("ul li input:not(:checked)")
+}
+
+
+
+
 document.getElementById("theme").addEventListener("click", function() {
   if (document.getElementById("theme").checked === true) {
     document.getElementsByClassName("dark-theme")[0].className = "light-theme"
@@ -94,12 +118,63 @@ function countTheLefts(){
   /*
     Function to count and update the number of left tasks
   */
-  var all = document.querySelectorAll("ul li")
-  var done = document.querySelectorAll("ul li input:checked")
-  var left = all.length - done.length
+  var all = allTasks()
+  var done = doneTasks()
+  var left = activeTasks().length //all.length - done.length
   document.querySelector(".items-left span").innerHTML= left
 
 }
+
+
+// For filtering
+for (var filterIndex=0; filterIndex<document.querySelectorAll(".filter input").length; filterIndex++){
+  document.querySelectorAll(".filter input")[filterIndex].addEventListener("click",function(){
+
+    all = allTasks()
+    done = doneTasks()
+    left = activeTasks()
+
+    // if click happens on "all", all lists have to be visible
+    if (document.getElementById("all").checked){
+      for (var j=0; j<left.length; j++){
+        li = left[j].parentElement.parentElement
+        li.style.display=''
+      }
+
+      for (var j=0; j<done.length; j++){
+        li = done[j].parentElement.parentElement
+        li.style.display=''
+      }
+
+    // if click happens on "active", "active" has to be visible but not "done"
+    }else if (document.getElementById("active").checked){
+      for (var j=0; j<left.length; j++){
+        li = left[j].parentElement.parentElement
+        li.style.display=''
+      }
+
+      for (var j=0; j<done.length; j++){
+        li = done[j].parentElement.parentElement
+        li.style.display='none'
+      }
+
+    // if click happens on "completed", "done" has to be visible but not "left"
+    }else if (document.getElementById("completed").checked){
+
+      for (var j=0; j<done.length; j++){
+        li = done[j].parentElement.parentElement
+        li.style.display=''
+      }
+
+      for (var j=0; j<left.length; j++){
+        li = left[j].parentElement.parentElement
+        li.style.display='none'
+      }
+    }
+
+  })
+}
+
 
 
 
