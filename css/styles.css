@@ -9,7 +9,7 @@
   --todo-shadow: hsl(235, 21%, 11%);
   --font-color: hsl(0, 0%, 98%);
   --font-color-hover: #fff;
-  --theme-bg: url(../images/icon-moon.svg) center no-repeat;
+  --theme-bg: url(../images/icon-sun.svg) center no-repeat;
 }
 
 .light-theme {
@@ -19,7 +19,7 @@
   --todo-shadow: hsl(235, 19%, 35%);
   --font-color: hsl(235, 21%, 11%);
   --font-color-hover: hsl(235, 21%, 11%);
-  --theme-bg: url(../images/icon-sun.svg) center no-repeat;
+  --theme-bg: url(../images/icon-moon.svg) center no-repeat;
 }
 
 body {
