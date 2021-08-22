@@ -90,18 +90,23 @@ function countTheLefts(){
 
 }
 
+
+
+
+
+
+
+// Clear completed
 document.querySelector(".clear").addEventListener("click", function(){
   var allMarked = document.querySelectorAll("ul li input:checked")
   var marked
   var li
   var ul
 
-  for (marked in allMarked){
-    li = allMarked[marked].parentNode.parentNode
-    ul = li.parentNode
+  for (marked=0; marked<allMarked.length; marked++){
+    li = allMarked[marked].parentElement.parentElement
+    ul = li.parentElement
 
-    console.log(allMarked[marked].parentNode)
-    console.log(li)
     ul.removeChild(li)
   }
 })
