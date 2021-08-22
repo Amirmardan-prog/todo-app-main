@@ -1,7 +1,6 @@
 
 countTheLefts()
 
-
 let theme = document.querySelector("body")
 
 document.getElementById("theme").addEventListener("click", function() {
@@ -65,24 +64,36 @@ newTask.addEventListener("keyup", function(event) {
       ul.appendChild(li)
 
       countTheLefts()
-
-      // document.querySelectorAll(".content ul li")
-      console.log(document.querySelectorAll(".content ul li"))
-      console.log(document.querySelectorAll("ul li").length)
+      liUpdateClicks()
     }
   }
 
 })
 
+
+function liUpdateClicks(){
+  /*
+  Function for counting the left tasks. "i" has to be updated
+  when we add new task to the list so, we have to use "liUpdateClicks" after
+  adding item to the list.
+
+  to extend "i" to the the new length of "li"s after adding new task
+  */
+  for (var i=0; i<document.querySelectorAll("ul li").length; i++){
+    document.querySelectorAll("ul li label")[i].addEventListener('click', countTheLefts)
+  }
+}
+
+// Click on the labels
 for (var i=0; i<document.querySelectorAll("ul li").length; i++){
   document.querySelectorAll("ul li label")[i].addEventListener('click', countTheLefts)
 }
 
 
 function countTheLefts(){
-  if (event){
-    console.log(event)
-  }
+  /*
+    Function to count and update the number of left tasks
+  */
   var all = document.querySelectorAll("ul li")
   var done = document.querySelectorAll("ul li input:checked")
   var left = all.length - done.length
