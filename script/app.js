@@ -126,51 +126,53 @@ function countTheLefts(){
 }
 
 
-// For filtering
-for (var filterIndex=0; filterIndex<document.querySelectorAll(".filter input").length; filterIndex++){
-  document.querySelectorAll(".filter input")[filterIndex].addEventListener("click",function(){
+// Filtering for desktop
+for (var filterIndex=0; filterIndex<document.querySelectorAll(".filter input").length/2; filterIndex++){
+  document.querySelectorAll(".filter input")[filterIndex].addEventListener("change",function(){
 
     all = allTasks()
     done = doneTasks()
     left = activeTasks()
 
     // if click happens on "all", all lists have to be visible
-    if (document.getElementById("all").checked){
-      for (var j=0; j<left.length; j++){
-        li = left[j].parentElement.parentElement
-        li.style.display=''
+      if (document.getElementById("all").checked){
+        showAll(left, done)
+
+      // if click happens on "active", "active" has to be visible but not "done"
+      }else if (document.getElementById("active").checked){
+        showActive(left, done)
+
+        // if click happens on "completed", "done" has to be visible but not "left"
+      }else if (document.getElementById("completed").checked){
+
+        showCompleted(left, done)
       }
 
-      for (var j=0; j<done.length; j++){
-        li = done[j].parentElement.parentElement
-        li.style.display=''
-      }
+  })
+}
 
-    // if click happens on "active", "active" has to be visible but not "done"
-    }else if (document.getElementById("active").checked){
-      for (var j=0; j<left.length; j++){
-        li = left[j].parentElement.parentElement
-        li.style.display=''
-      }
 
-      for (var j=0; j<done.length; j++){
-        li = done[j].parentElement.parentElement
-        li.style.display='none'
-      }
+// Filtering for mobile
+for (var filterIndex_m=3; filterIndex_m<document.querySelectorAll(".filter input").length; filterIndex_m++){
+  document.querySelectorAll(".filter input")[filterIndex_m].addEventListener("click",function(){
+    console.log("hi")
+    all = allTasks()
+    done = doneTasks()
+    left = activeTasks()
 
-    // if click happens on "completed", "done" has to be visible but not "left"
-    }else if (document.getElementById("completed").checked){
+    // if click happens on "all", all lists have to be visible
+      if (document.getElementById("m_all").checked){
+        showAll(left, done)
 
-      for (var j=0; j<done.length; j++){
-        li = done[j].parentElement.parentElement
-        li.style.display=''
-      }
+      // if click happens on "active", "active" has to be visible but not "done"
+      }else if (document.getElementById("m_active").checked){
+        showActive(left, done)
 
-      for (var j=0; j<left.length; j++){
-        li = left[j].parentElement.parentElement
-        li.style.display='none'
+        // if click happens on "completed", "done" has to be visible but not "left"
+      }else if (document.getElementById("m_completed").checked){
+
+        showCompleted(left, done)
       }
-    }
 
   })
 }
@@ -178,8 +180,42 @@ for (var filterIndex=0; filterIndex<document.querySelectorAll(".filter input").l
 
 
 
+function showActive(left, done){
+  for (var j=0; j<left.length; j++){
+    li = left[j].parentElement.parentElement
+    li.style.display=''
+  }
+
+  for (var j=0; j<done.length; j++){
+    li = done[j].parentElement.parentElement
+    li.style.display='none'
+  }
+}
 
 
+function showAll(left, done){
+  for (var j=0; j<left.length; j++){
+    li = left[j].parentElement.parentElement
+    li.style.display=''
+  }
+
+  for (var j=0; j<done.length; j++){
+    li = done[j].parentElement.parentElement
+    li.style.display=''
+  }
+}
+
+function showCompleted(left, done){
+  for (var j=0; j<done.length; j++){
+    li = done[j].parentElement.parentElement
+    li.style.display=''
+  }
+
+  for (var j=0; j<left.length; j++){
+    li = left[j].parentElement.parentElement
+    li.style.display='none'
+  }
+}
 
 
 // Clear completed
