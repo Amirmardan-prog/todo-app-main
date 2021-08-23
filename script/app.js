@@ -1,3 +1,106 @@
+let tasks
+
+if (localStorage.getItem("tasks") == null) {
+  console.log("Null tasks")
+  tasks = {
+    active: [],
+    done: []
+  };
+
+  // tasks.active.push("scd")
+  localStorage.setItem("tasks", JSON.stringify(tasks))
+  console.log(localStorage.getItem("tasks"))
+} else {
+  readLocalStorage()
+  // document.querySelector("ul").innerHTML = JSON.stringify(JSON.parse(localStorage.getItem("tasks")).active)
+
+  // console.log(localStorage.getItem("tasks"))
+  // console.log(JSON.parse(localStorage.getItem("tasks")).active)
+  // document.querySelector("ul") = JSON.parse(localStorage.getItem("tasks")).active[0]
+  // document.querySelector(".content").appendElement(localStorage.getItem("tasks"))
+}
+
+function readLocalStorage(){
+  let oldTasks = JSON.parse(localStorage.getItem("tasks")).active
+
+  for (let i=0; i<oldTasks.length; i++){
+    updateTasks(oldTasks[i])
+    console.log(oldTasks)
+  }
+
+
+}
+
+
+
+
+function updateTasks(newTask){
+
+  let activeRadio = document.querySelectorAll("input[type='radio'][name='filter']:checked")[0].id
+  let m_activeRadio = document.querySelectorAll("input[type='radio'][name='mfilter']:checked")[0].id
+
+
+  triggerEvent(document.getElementById("all"), 'click');
+  triggerEvent(document.getElementById("m_all"), 'click');
+
+
+  let ul = document.querySelector("ul");
+
+  let li = document.createElement("li");
+  li.className = "flex-row"
+
+  let label = document.createElement("label")
+  label.className = "list-item";
+
+  let inputCheckbox = document.createElement("input")
+  inputCheckbox.setAttribute("type", "checkbox")
+  inputCheckbox.setAttribute("name", "todoItem")
+
+  let spanCheckmark = document.createElement("span")
+  spanCheckmark.className = "checkmark"
+
+  let spanText = document.createElement("span")
+  spanText.className = "text"
+  spanText.appendChild(document.createTextNode(newTask))
+
+  let spanRemove = document.createElement("span")
+  spanRemove.className = "remove"
+
+  let divMask = document.createElement("div")
+  divMask.className = "mask"
+
+  spanCheckmark.innerHTML += "\n \t \t \t"
+  spanCheckmark.appendChild(divMask)
+
+  label.innerHTML += "\n \t \t"
+  label.appendChild(inputCheckbox)
+  label.innerHTML += "\n \t \t"
+  label.appendChild(spanCheckmark);
+
+  label.innerHTML += "\n \t \t"
+  label.appendChild(spanText)
+
+  li.innerHTML += "\n \t"
+  li.appendChild(label)
+
+  li.innerHTML += "\n \t"
+  li.appendChild(spanRemove)
+  ul.appendChild(li)
+
+  countTheLefts()
+  liUpdateClicks()
+  updateRemoves()
+
+
+  triggerEvent(document.getElementById(activeRadio), 'click');
+  triggerEvent(document.getElementById(m_activeRadio), 'click');
+
+
+}
+
+
+
+
 document.getElementById("theme").addEventListener("click", function() {
   if (document.getElementById("theme").checked === true) {
     document.getElementsByClassName("dark-theme")[0].className = "light-theme"
@@ -52,26 +155,26 @@ function liUpdateClicks() {
   }
 }
 
-  function countTheLefts() {
-    /*
-      Count the left ones
-    */
-    // updateFilter()
+function countTheLefts() {
+  /*
+    Count the left ones
+  */
+  // updateFilter()
 
-    let activeRadio = document.querySelectorAll("input[type='radio'][name='filter']:checked")[0].id
-    let m_activeRadio = document.querySelectorAll("input[type='radio'][name='mfilter']:checked")[0].id
+  let activeRadio = document.querySelectorAll("input[type='radio'][name='filter']:checked")[0].id
+  let m_activeRadio = document.querySelectorAll("input[type='radio'][name='mfilter']:checked")[0].id
 
-    triggerEvent( document.getElementById("all"), 'click' );
-    triggerEvent( document.getElementById("m_all"), 'click' );
+  triggerEvent(document.getElementById("all"), 'click');
+  triggerEvent(document.getElementById("m_all"), 'click');
 
 
-    let all = allTasks()
+  let all = allTasks()
 
-    let done = doneTasks()
-    let left = activeTasks().length //all.length - done.length
-    document.querySelector(".items-left span").innerHTML = left
-    triggerEvent(document.getElementById(activeRadio), 'click' );
-    triggerEvent(document.getElementById(m_activeRadio), 'click' );
+  let done = doneTasks()
+  let left = activeTasks().length //all.length - done.length
+  document.querySelector(".items-left span").innerHTML = left
+  triggerEvent(document.getElementById(activeRadio), 'click');
+  triggerEvent(document.getElementById(m_activeRadio), 'click');
 
 
 }
@@ -219,66 +322,19 @@ newTask.addEventListener("keyup", function(event) {
   if (event.keyCode === 13) {
     if (this.value) {
 
-      let activeRadio = document.querySelectorAll("input[type='radio'][name='filter']:checked")[0].id
-      let m_activeRadio = document.querySelectorAll("input[type='radio'][name='mfilter']:checked")[0].id
+
+      updateTasks(this.value)
 
 
-      triggerEvent( document.getElementById("all"), 'click' );
-      triggerEvent( document.getElementById("m_all"), 'click' );
 
-      let ul = document.querySelector("ul");
-
-      let li = document.createElement("li");
-      li.className = "flex-row"
-
-      let label = document.createElement("label")
-      label.className = "list-item";
-
-      let inputCheckbox = document.createElement("input")
-      inputCheckbox.setAttribute("type", "checkbox")
-      inputCheckbox.setAttribute("name", "todoItem")
-
-      let spanCheckmark = document.createElement("span")
-      spanCheckmark.className = "checkmark"
-
-      let spanText = document.createElement("span")
-      spanText.className = "text"
-      spanText.appendChild(document.createTextNode(this.value))
-
-      let spanRemove = document.createElement("span")
-      spanRemove.className = "remove"
-
-      let divMask = document.createElement("div")
-      divMask.className = "mask"
-
-      spanCheckmark.innerHTML += "\n \t \t \t"
-      spanCheckmark.appendChild(divMask)
-
-      label.innerHTML += "\n \t \t"
-      label.appendChild(inputCheckbox)
-      label.innerHTML += "\n \t \t"
-      label.appendChild(spanCheckmark);
-
-      label.innerHTML += "\n \t \t"
-      label.appendChild(spanText)
-
-      li.innerHTML += "\n \t"
-      li.appendChild(label)
-
-      li.innerHTML += "\n \t"
-      li.appendChild(spanRemove)
-      ul.appendChild(li)
+      let oldTasks = JSON.parse(localStorage.getItem("tasks"))
+      oldTasks.active.push(this.value)
+      localStorage.setItem("tasks", JSON.stringify(oldTasks))
 
 
-      countTheLefts()
-      liUpdateClicks()
-      updateRemoves()
 
-
-      triggerEvent(document.getElementById(activeRadio), 'click' );
-      triggerEvent(document.getElementById(m_activeRadio), 'click' );
-
-
+      console.log(JSON.parse(localStorage.getItem("tasks")).active)
+      // localStorage.setItem("tasks", tasks)
     }
 
     this.value = ''
@@ -286,12 +342,13 @@ newTask.addEventListener("keyup", function(event) {
 
 })
 
-function triggerEvent( elem, event ) {
-  var clickEvent = new MouseEvent( event, {
-      view: window,
-      bubbles: true,
-      cancelable: true,
-      isTrusted:true,
-      composed:true}) ; // Create the event.
-  elem.dispatchEvent( clickEvent );    // Dispatch the event.
+function triggerEvent(elem, event) {
+  var clickEvent = new MouseEvent(event, {
+    view: window,
+    bubbles: true,
+    cancelable: true,
+    isTrusted: true,
+    composed: true
+  }); // Create the event.
+  elem.dispatchEvent(clickEvent); // Dispatch the event.
 }
