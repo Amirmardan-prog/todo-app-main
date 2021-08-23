@@ -275,18 +275,15 @@ function updateLocalStorage(){
 
   for (let i=0;i<all_tasks.length;i++){
     tasks.allTasks.push(all_tasks[i].children[0].children[2].innerHTML)
-    console.log(all_tasks[i].children[0].children[0].checked)
 
     if (all_tasks[i].children[0].children[0].checked){
       tasks.taskId.push(1)
     }else if(!all_tasks[i].children[0].children[0].checked){
-      console.log("false")
       tasks.taskId.push(0)
     }
 
   }
-  console.log(tasks.allTasks)
-  console.log(tasks.taskId)
+
 
   localStorage.setItem("tasks", JSON.stringify(tasks))
   // readLocalStorage()
@@ -350,7 +347,6 @@ document.querySelector(".clear").addEventListener("click", function() {
   let marked
   let li
   let ul
-  deleteLocalStorageElement(allMarked.length)
   for (marked = 0; marked < allMarked.length; marked++) {
     li = allMarked[marked].parentElement.parentElement
     ul = li.parentElement
@@ -358,24 +354,8 @@ document.querySelector(".clear").addEventListener("click", function() {
     ul.removeChild(li)
   }
 
+  updateLocalStorage()
 })
-
-
-function deleteLocalStorageElement(len_marked){
-
-  let tasks = JSON.parse(localStorage.getItem("tasks"))
-  let leng = tasks.allTasks.length
-  for (let i=0; i<len_marked;i++){
-
-    if (tasks.taskId[i]===1){
-      tasks.allTasks.splice(i,1)
-      tasks.taskId.splice(i,1)
-      i--
-      localStorage.setItem("tasks", JSON.stringify(tasks))
-    }
-
-  }
-}
 
 
 
