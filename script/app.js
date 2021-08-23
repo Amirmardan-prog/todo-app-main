@@ -1,40 +1,53 @@
 let tasks
 
+// check if the is data on the localStorage
 if (localStorage.getItem("tasks") == null) {
-  console.log("Null tasks")
   tasks = {
-    active: [],
-    done: []
+    allTasks: [],
+    taskId: []
   };
 
-  // tasks.active.push("scd")
   localStorage.setItem("tasks", JSON.stringify(tasks))
-  console.log(localStorage.getItem("tasks"))
 } else {
   readLocalStorage()
-  // document.querySelector("ul").innerHTML = JSON.stringify(JSON.parse(localStorage.getItem("tasks")).active)
-
-  // console.log(localStorage.getItem("tasks"))
-  // console.log(JSON.parse(localStorage.getItem("tasks")).active)
-  // document.querySelector("ul") = JSON.parse(localStorage.getItem("tasks")).active[0]
-  // document.querySelector(".content").appendElement(localStorage.getItem("tasks"))
 }
 
-function readLocalStorage(){
-  let oldTasks = JSON.parse(localStorage.getItem("tasks")).active
+// Read the tasks from localStorage
+function readLocalStorage() {
+  let oldTasks = JSON.parse(localStorage.getItem("tasks"))
 
-  for (let i=0; i<oldTasks.length; i++){
-    updateTasks(oldTasks[i])
-    console.log(oldTasks)
+  for (let i = 0; i < oldTasks.allTasks.length; i++) {
+    updateTasks(oldTasks.allTasks[i]) // send all tasks of localstorage to screen again
+    if (oldTasks.taskId[i] ===1){
+      document.querySelectorAll("ul li label input")[i].checked=true
+    }
+  }
+}
+
+updateAllTasks()
+
+function updateAllTasks(){
+  for (let i = 0; i < allTasks().length; i++) {
+    document.querySelectorAll("ul li label")[i].addEventListener("mouseup", changingLocalId.bind(event, i))
   }
 
+  function changingLocalId(i) {
+    let oldTasks = JSON.parse(localStorage.getItem("tasks"))
 
+    if (document.querySelectorAll("ul li label input")[i].checked) {
+      oldTasks.taskId[i] = 0
+    }else{
+      oldTasks.taskId[i] = 1
+    }
+
+    localStorage.setItem("tasks", JSON.stringify(oldTasks))
+
+  }
 }
 
 
 
-
-function updateTasks(newTask){
+function updateTasks(newTask) {
 
   let activeRadio = document.querySelectorAll("input[type='radio'][name='filter']:checked")[0].id
   let m_activeRadio = document.querySelectorAll("input[type='radio'][name='mfilter']:checked")[0].id
@@ -90,7 +103,7 @@ function updateTasks(newTask){
   countTheLefts()
   liUpdateClicks()
   updateRemoves()
-
+updateAllTasks()
 
   triggerEvent(document.getElementById(activeRadio), 'click');
   triggerEvent(document.getElementById(m_activeRadio), 'click');
@@ -173,6 +186,7 @@ function countTheLefts() {
   let done = doneTasks()
   let left = activeTasks().length //all.length - done.length
   document.querySelector(".items-left span").innerHTML = left
+
   triggerEvent(document.getElementById(activeRadio), 'click');
   triggerEvent(document.getElementById(m_activeRadio), 'click');
 
@@ -241,11 +255,41 @@ function updateRemoves() {
       if (ul) {
         ul.removeChild(li)
         countTheLefts()
+
+        updateLocalStorage()
       }
 
 
     })
   }
+}
+
+function updateLocalStorage(){
+  let all_tasks = allTasks()
+
+  let tasks = {
+    allTasks: [],
+    taskId: []
+  }
+  let test
+
+  for (let i=0;i<all_tasks.length;i++){
+    tasks.allTasks.push(all_tasks[i].children[0].children[2].innerHTML)
+    console.log(all_tasks[i].children[0].children[0].checked)
+
+    if (all_tasks[i].children[0].children[0].checked){
+      tasks.taskId.push(1)
+    }else if(!all_tasks[i].children[0].children[0].checked){
+      console.log("false")
+      tasks.taskId.push(0)
+    }
+
+  }
+  console.log(tasks.allTasks)
+  console.log(tasks.taskId)
+
+  localStorage.setItem("tasks", JSON.stringify(tasks))
+  // readLocalStorage()
 }
 
 
@@ -306,18 +350,37 @@ document.querySelector(".clear").addEventListener("click", function() {
   let marked
   let li
   let ul
-
+  deleteLocalStorageElement(allMarked.length)
   for (marked = 0; marked < allMarked.length; marked++) {
     li = allMarked[marked].parentElement.parentElement
     ul = li.parentElement
 
     ul.removeChild(li)
   }
+
 })
 
 
-var newTask = document.querySelector(".add-new-item input");
+function deleteLocalStorageElement(len_marked){
 
+  let tasks = JSON.parse(localStorage.getItem("tasks"))
+  let leng = tasks.allTasks.length
+  for (let i=0; i<len_marked;i++){
+
+    if (tasks.taskId[i]===1){
+      tasks.allTasks.splice(i,1)
+      tasks.taskId.splice(i,1)
+      i--
+      localStorage.setItem("tasks", JSON.stringify(tasks))
+    }
+
+  }
+}
+
+
+
+// Entering new task
+var newTask = document.querySelector(".add-new-item input");
 newTask.addEventListener("keyup", function(event) {
   if (event.keyCode === 13) {
     if (this.value) {
@@ -326,15 +389,11 @@ newTask.addEventListener("keyup", function(event) {
       updateTasks(this.value)
 
 
-
       let oldTasks = JSON.parse(localStorage.getItem("tasks"))
-      oldTasks.active.push(this.value)
+      oldTasks.allTasks.push(this.value)
+      oldTasks.taskId.push(0)
+
       localStorage.setItem("tasks", JSON.stringify(oldTasks))
-
-
-
-      console.log(JSON.parse(localStorage.getItem("tasks")).active)
-      // localStorage.setItem("tasks", tasks)
     }
 
     this.value = ''
@@ -352,3 +411,12 @@ function triggerEvent(elem, event) {
   }); // Create the event.
   elem.dispatchEvent(clickEvent); // Dispatch the event.
 }
+
+document.querySelector(".add-new-item .checkmark").addEventListener("click",function(){
+  let tasks = allTasks();
+  let labels = document.querySelectorAll("ul li label")
+
+  for (let i=0;i<tasks.length; i++){
+    triggerEvent(labels[i], "click")
+  }
+})
